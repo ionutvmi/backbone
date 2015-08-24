@@ -1,0 +1,31 @@
+//
+// Trumps
+// -----
+// Helpers and overrides
+//
+
+
+/**
+ * Helper classes to show/hide content only for huge/small monitors
+ */
+.u-large-only {
+    display: none;
+}
+
+.u-small-only {
+    display: block;
+}
+
+@media screen and (min-width: 1300px) {
+    .u-large-only {
+        display: block;
+    }
+    .u-small-only {
+        display: none;
+    }
+
+}
+
+
+
+

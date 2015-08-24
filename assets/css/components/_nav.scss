@@ -1,0 +1,39 @@
+/**
+ * Name: Navigation component
+ * Used in: Header
+ */
+.nav {
+    $nav-el-width: (100/6) * 1%; // for 6 items
+    $nav-fz: 16px;
+    $nav-color: #fff;
+
+    overflow: hidden; // clearfix
+    clear: both;
+
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        text-align: center;
+        float: left;
+        width: $nav-el-width;
+    }
+
+    a {
+        color: $nav-color;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: $nav-fz;
+        padding-right: 5px;
+
+        @include text-overflow();
+        @include Ubuntu('medium');
+    }
+}

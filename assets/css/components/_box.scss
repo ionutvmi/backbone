@@ -1,0 +1,87 @@
+/**
+ * A box represnts a section on the page.
+ * It has generous spacing on the top and bottom.
+ * It may contain an optional headline.
+ */
+
+.box {
+    padding: 100px 0;
+    position: relative;
+
+
+    .side-title {
+        font-size: 48px;
+        text-transform: uppercase;
+    }
+
+    .hl {
+        color: #00aaef;
+    }
+
+    .box__title {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        top: 0;
+        left: 0;
+        transform: translateY(-50%);
+
+        h2 {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            font-size: 48px;
+            @include Ubuntu('light');
+
+            display: inline-block;
+            border-bottom: 2px solid #00aaef;
+            line-height: 1.4;
+
+            &:after {
+                content: "";
+                position: absolute;
+                bottom: -11px;
+                left: 0;
+                right: 0;
+                margin: auto;
+
+                width: 30px;
+                height: 14px;
+
+                background: #fff url($img_path + '/icons/crown.png') center no-repeat;
+            }
+        }
+    }
+}
+
+.box__content {
+    font-size: 16px;
+    color: #000;
+    @include Ubuntu('light');
+
+    ol, ul {
+        margin-left: -40px;
+    }
+
+    .box__text {
+        padding-left: 100px;
+        line-height: 1.4;
+    }
+
+}
+
+.box--dark {
+    background: #eee;
+
+    .box__title h2:after {
+        background-color: #eee;
+    }
+}
+
+
+
+
+
+
+
+

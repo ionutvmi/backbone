@@ -1,0 +1,29 @@
+@import "libs/gridle/gridle";
+
+// Cheat sheet:
+// @include gridle_container();
+// @include gridle(4);
+// @include gridle_push(4);
+// @include gridle_pull(4);
+
+// basic configuration :
+@include gridle_setup( $grid-settings );
+
+
+.grid-container {
+    @include gridle_container();
+
+    .one-third {
+        @include gridle(6);
+    }
+
+    .two-thirds {
+        @include gridle(12);
+    }
+}
+
+
+
+
+// Generate classes :
+// @include gridle_generate_classes();

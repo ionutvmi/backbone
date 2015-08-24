@@ -1,0 +1,62 @@
+//
+// Fonts
+// -----
+// Custom fonts defined as mixins
+
+
+//
+// Font face
+// -----
+// Define here the font face for custom fonts
+//
+
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic);
+
+$ubuntuWeights: (
+    "light": 300,
+    "normal": 400,
+    "medium": 500,
+    "bold": 700
+);
+
+//
+// Mixins
+// -----
+// Define here mixins for the used fonts
+//
+
+@mixin Arial() {
+    font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+@mixin Georgia() {
+    font-family: Georgia,Times,"Times New Roman",serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+@mixin CourierNew() {
+    font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@mixin Ubuntu($weight: '') {
+    font-family: 'Ubuntu', sans-serif;
+
+    @if map-has-key($ubuntuWeights, $weight) {
+        font-weight: map-get($ubuntuWeights, $weight);
+    } @else {
+
+        @warn "\7 The font weight ``#{$weight}`` doesn't exists ! " +
+              "Font weight normal applied ";
+        font-weight: map-get($ubuntuWeights, "normal");
+    }
+
+
+
+}
+
