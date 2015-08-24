@@ -4,6 +4,7 @@ define([
 
     var router = Backbone.Router.extend({
         routes: {
+            'about(/)': 'loadAbout',
             '*others': 'loadHome',
         },
 
@@ -13,6 +14,10 @@ define([
 
         loadHome: function () {
             this.appView.loadHome();
+        },
+
+        loadAbout: function () {
+            this.appView.loadAbout();
         }
 
     });

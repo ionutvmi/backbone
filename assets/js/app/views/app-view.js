@@ -3,14 +3,32 @@ define([
     'jquery',
     'templates',
 
-    'app/views/homepage-view'
+    // views
+    'app/views/header-view',
+    'app/views/footer-view',
+    'app/views/homepage-view',
+    'app/views/about-view'
 ], function(Backbone, $, tpls,
-    HomepageView) {
+    HeaderView, FooterView, HomepageView, AboutView
+   ) {
 
     var view = Backbone.View.extend({
         el: '.js-app',
 
         template: tpls['index.html'],
+
+        views: {},
+
+        initialize: function () {
+
+            // render is called internally for this views
+            this.views.header = new HeaderView({
+                el: '.js-app .header'
+            });
+            this.views.footer = new FooterView({
+                el: '.js-app .footer'
+            });
+        },
 
         render: function () {
             this.$('.main-container')
@@ -20,14 +38,22 @@ define([
             return this;
         },
 
-        loadHome : function () {
+        loadHome: function () {
+            this.clean();
             this.activeView = new HomepageView();
             this.render();
         },
 
-        loadAbout : function () {
+        loadAbout: function () {
+            this.clean();
             this.activeView = new AboutView();
             this.render();
+        },
+
+        clean: function () {
+            if (this.activeView) {
+                this.activeView.remove();
+            }
         }
 
 

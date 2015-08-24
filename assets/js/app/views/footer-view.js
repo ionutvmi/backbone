@@ -1,0 +1,24 @@
+define([
+    'backbone',
+    'templates'
+], function(Backbone, tpls) {
+
+    var view = Backbone.View.extend({
+        template: tpls['footer.html'],
+
+        initialize: function (options) {
+            this.options = options || {};
+            this.render();
+        },
+
+        render: function() {
+            var html = this.template();
+
+            this.$el.html(html);
+
+            return this;
+        }
+    });
+
+    return view;
+});
