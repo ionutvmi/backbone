@@ -15,8 +15,6 @@ define([
     var view = Backbone.View.extend({
         el: '.js-app',
 
-        template: tpls['index.html'],
-
         views: {},
 
         initialize: function () {

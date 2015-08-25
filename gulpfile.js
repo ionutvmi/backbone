@@ -24,6 +24,8 @@ gulp.task('sass', function () {
 });
 
 gulp.task('watch', function() {
+
+    // development files
     gulp.watch('assets/scss/**/*.scss', ['sass']);
 
     gulp.watch('*.html', function () {
@@ -31,6 +33,17 @@ gulp.task('watch', function() {
     });
 
     gulp.watch('templates/**/*.html', ['templates']);
+
+    // test files
+    gulp.watch('test/**/*.html', function () {
+        gulp.src('test/**/*.html').pipe(connect.reload());
+    });
+
+    gulp.watch('test/**/*.js', function () {
+        gulp.src('test/**/*.js').pipe(connect.reload());
+    });
+
+    console.log("Visit http://localhost:8080/test/SpecRunner.html to run the tests.");
 });
 
 gulp.task('templates', function() {
@@ -49,5 +62,5 @@ gulp.task('templates', function() {
         .pipe(gulp.dest('assets/js/app'));
 });
 
-gulp.task('develop', ['sass', 'watch', 'connect']);
+gulp.task('develop', ['sass', 'templates', 'watch', 'connect']);
 gulp.task('default', ['develop']);

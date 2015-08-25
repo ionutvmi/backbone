@@ -41,7 +41,7 @@ window["_templates_app_"]["homepage.html"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += 'Welcome to my app\r\n';
+__p += '<p>Welcome to my app.</p>\r\n\r\n<p>To run the tests go to the <a href="/test/SpecRunner.html">test/SpecRunner.html</a>\r\npage\r\n</p>\r\n';
 
 }
 return __p
