@@ -7,13 +7,6 @@ require.config({
     },
 
     shim: {
-        'underscore': {
-            exports: '_'
-        },
-        'backbone': {
-            deps: ['underscore', 'jquery'],
-            exports: 'Backbone'
-        },
         'templates': {
             deps: ['underscore'],
             exports: '_templates_app_'

@@ -4,15 +4,23 @@ var sass = require('gulp-ruby-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var template = require('gulp-template-compile');
 var concat = require('gulp-concat');
+var amdOptimize = require("amd-optimize");
+var addSrc = require("gulp-add-src");
+var processhtml = require('gulp-processhtml');
 
 
-// not used at the moment
+/**
+ * Start a static server with livereload enabled
+ */
 gulp.task('connect', function() {
   connect.server({
     livereload: true
   });
 });
 
+/**
+ * Compile the sass files
+ */
 gulp.task('sass', function () {
     return sass('assets/scss/styles.scss', { style: 'expanded', sourcemap: true })
         .on('error', function (err) {
@@ -23,31 +31,11 @@ gulp.task('sass', function () {
         .pipe(connect.reload());
 });
 
-gulp.task('watch', function() {
-
-    // development files
-    gulp.watch('assets/scss/**/*.scss', ['sass']);
-
-    gulp.watch('*.html', function () {
-        gulp.src('*.html').pipe(connect.reload());
-    });
-
-    gulp.watch('templates/**/*.html', ['templates']);
-
-    // test files
-    gulp.watch('test/**/*.html', function () {
-        gulp.src('test/**/*.html').pipe(connect.reload());
-    });
-
-    gulp.watch('test/**/*.js', function () {
-        gulp.src('test/**/*.js').pipe(connect.reload());
-    });
-
-    console.log("Visit http://localhost:8080/test/SpecRunner.html to run the tests.");
-});
-
+/**
+ * Build the templates.js file based on the html files from the /templates folder
+ */
 gulp.task('templates', function() {
-    gulp.src('templates/*.html')
+    return gulp.src('templates/*.html')
         .pipe(template({
             namespace: '_templates_app_',
             templateSettings: {
@@ -62,5 +50,63 @@ gulp.task('templates', function() {
         .pipe(gulp.dest('assets/js/app'));
 });
 
+/**
+ * Watch for any file changes and use livereload
+ */
+gulp.task('watch', function() {
+
+    // development files
+    gulp.watch('assets/scss/**/*.scss', ['sass']);
+
+    gulp.watch('assets/js/**/*.js', function () {
+        gulp.src('assets/js/**/*.js').pipe(connect.reload());
+    });
+
+    gulp.watch('*.html', function () {
+        gulp.src('*.html').pipe(connect.reload());
+    });
+
+    gulp.watch('templates/**/*.html', ['templates']);
+
+    // test files
+    gulp.watch(['test/**/*.{html,js}'], function () {
+        gulp.src('test/**/*.{html,js}').pipe(connect.reload());
+    });
+
+});
+
+/**
+ * Process the html files to remove the requirejs script.
+ */
+gulp.task('build-html', function() {
+    return gulp.src('*.html')
+        .pipe(processhtml())
+        .pipe(gulp.dest('dist'));
+});
+
+/**
+ * Copy all the static assets to the dist folder
+ */
+gulp.task('build-assets', ['sass'], function() {
+    return gulp.src(['assets/**/*.*', '!assets/**/*.{js,scss,sass}'])
+        .pipe(gulp.dest('dist/assets'));
+});
+
+/**
+ * Merge all the js files using amd-optimize
+ */
+gulp.task('build-js', ['templates'], function() {
+    return gulp.src("assets/js/**/*.js")
+        // Traces all modules and outputs them in the correct order.
+        .pipe(amdOptimize("main", {
+            configFile: 'assets/js/main.js'
+        }))
+        .pipe(addSrc.prepend('assets/js/libs/almond.js'))
+        .pipe(concat("main.all.js"))
+        .pipe(gulp.dest("dist/assets/js"));
+});
+
+gulp.task('build', ['build-js', 'build-assets', 'build-html']);
 gulp.task('develop', ['sass', 'templates', 'watch', 'connect']);
+
 gulp.task('default', ['develop']);
